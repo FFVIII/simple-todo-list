@@ -9,7 +9,7 @@ function App() {
   // addTask function 
   const addTask = () => {
     if(inputValue.trim() !== ''){
-      setTaskList([...taskList, {text: inputValue, completed: false}])
+      setTaskList([...taskList, {text: inputValue, completed: false, isEditing: false}])
       setInputValue('')
     }else{
       alert("Can you enter something on it")
@@ -23,12 +23,25 @@ function App() {
     setTaskList(updatedTaskList)
   }
 
-  const ToggleEvent = (index) => {
+  const ToggleTask = (index) => {
     const updatedTaskList = [...taskList]
     updatedTaskList[index].completed = !updatedTaskList[index].completed
     setTaskList(updatedTaskList)
   }
 
+  const toggleEdit = (index) => {
+    const updatedTaskList = [...taskList]
+    updatedTaskList[index].isEditing = !updatedTaskList[index].isEditing
+    setTaskList(updatedTaskList)
+    
+  }
+
+  const editTask = (index, newText) => {
+    const updatedTaskList = [...taskList]
+    updatedTaskList[index].text = newText;
+    updatedTaskList[index].isEditing = false;
+    setTaskList(updatedTaskList)
+  }
 
   return (
     <div className="App">
@@ -47,12 +60,27 @@ function App() {
             <input 
               type='checkbox'
               value={task.completed}
-              onChange={() => ToggleEvent(index)}
+              onChange={() => ToggleTask(index)}
             />
-            <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-              {task.text}
+
+            {task.isEditing ? (
+              <input 
+                type='text'
+                defaultValue={task.text}
+                onBlur={(e) => editTask(index, e.target.value)}
+              />
+            ) : (
+              <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+                {task.text}
+              </span>
+            )}
+
+            <button onClick={() => toggleEdit(index)}>{task.isEditing ? 'save' : 'edit'}</button>
+
+            <span style={{marginLeft: 10}}>
+              <button onClick={() => deleteTask(index)}>Remove</button>
             </span>
-            <button onClick={() => deleteTask(index)}>Remove</button>
+           
           </li>
         ))}
       </ul>
