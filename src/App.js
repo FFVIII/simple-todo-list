@@ -23,7 +23,7 @@ function App() {
     setTaskList(updatedTaskList)
   }
 
-  const ToggleTask = (index) => {
+  const toggleTask = (index) => {
     const updatedTaskList = [...taskList]
     updatedTaskList[index].completed = !updatedTaskList[index].completed
     setTaskList(updatedTaskList)
@@ -33,7 +33,6 @@ function App() {
     const updatedTaskList = [...taskList]
     updatedTaskList[index].isEditing = !updatedTaskList[index].isEditing
     setTaskList(updatedTaskList)
-    
   }
 
   const editTask = (index, newText) => {
@@ -60,7 +59,7 @@ function App() {
             <input 
               type='checkbox'
               value={task.completed}
-              onChange={() => ToggleTask(index)}
+              onChange={() => toggleTask(index)}
             />
 
             {task.isEditing ? (
