@@ -65,7 +65,9 @@ function App() {
             {task.isEditing ? (
               <input 
                 type='text'
+                //keep the exist task value
                 defaultValue={task.text}
+                //edit exist task value
                 onBlur={(e) => editTask(index, e.target.value)}
               />
             ) : (
